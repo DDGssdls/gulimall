@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://172.20.10.3:3306/gulimail_oms?characterEncoding=utf-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+#       使用nacos注册中心需要注意的就是 1 配置 nacos 2 就是配置nacos连接的地址 3 就是给服务起名称 要不就是注册不上
+  application:
+    name: gulimail-order
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  global-config:
+    db-config:
+      id-type: auto
+server:
+  port: 9000
