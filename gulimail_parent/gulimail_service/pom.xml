@@ -19,6 +19,9 @@
         <module>gulimail_ware</module>
         <module>gulimail_oss</module>
         <module>gulimail-search</module>
+        <module>gulimail-authserver</module>
+
+
 
     </modules>
     <dependencies>

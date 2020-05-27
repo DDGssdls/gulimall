@@ -1,10 +1,12 @@
 package com.edu.gulimail.product.service.impl;
 
+import com.edu.gulimail.product.vo.SkuItemVo;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -98,6 +100,18 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         List<SkuInfoEntity> skuInfoEntities = baseMapper.selectList(wrapper);
         return skuInfoEntities;
 
+    }
+
+    @Override
+    public SkuItemVo item(Long item) {
+
+        // 使用的是基本信息：
+        // 获取的是 图片的信息
+        // 获取的是 所有的sku组合信息
+        // 获取spu介绍
+        // 获取   所有的属性值
+
+        return null;
     }
 
 }

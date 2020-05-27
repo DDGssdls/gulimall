@@ -24,8 +24,8 @@ public class ListController {
     @GetMapping("/list.html")
     public String listPage( SearchParamVo searchParamVo, Model model){
         System.out.println(searchParamVo);
-        SearchResult search = mallSearchService.search(searchParamVo);
-        model.addAttribute("search", search);
+       // SearchResult search = mallSearchService.search(searchParamVo);
+        model.addAttribute("search", null);
         /*将页面提交的请求参数封装成*/
         return "index";
     }

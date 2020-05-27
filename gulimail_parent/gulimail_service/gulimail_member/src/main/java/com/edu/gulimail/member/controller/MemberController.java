@@ -4,7 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 
 
+import com.edu.common.exception.GulimallSysException;
 import com.edu.gulimail.member.feign.CouponFeignService;
+import com.edu.gulimail.member.vo.UserRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,5 +97,15 @@ public class MemberController {
         memberEntity.setNickname("张三");
         R r = couponFeignService.memberCoupons();
         return R.ok().put("member", memberEntity).put("coupons", r.get("coupons"));
+    }
+
+    @PostMapping("/regist")
+    public R userRegister(@RequestBody UserRegisterVo userRegisterVo){
+        try {
+            memberService.regist(userRegisterVo);
+        } catch (GulimallSysException e) {
+            R.error(e.getMessage());
+        }
+        return R.ok();
     }
 }

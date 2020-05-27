@@ -19,7 +19,7 @@ public class SwaggerConfig {
      * 进行访问使用的地址就是 localhost：8001/swagger-ui.html 地址是固定的
      * */
 
-   /* @Bean
+    @Bean
     public Docket webApiConfig() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("webApi")//配置的是名字
@@ -39,5 +39,5 @@ public class SwaggerConfig {
                 .contact(new Contact("Helen", "http://www.edu.com", "1306082199@qq.com"))
                 .build();
 
-    }*/
+    }
 }
