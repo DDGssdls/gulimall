@@ -7,10 +7,8 @@ import com.eud.gulimall.auth.vo.UserInfoVo;
 import com.eud.gulimall.auth.vo.UserLoginVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -37,6 +35,7 @@ public class LoginController {
     private StringRedisTemplate stringRedisTemplate;
     @Resource
     private MemberRegisterService memberRegisterService;
+
 
     @GetMapping(value = {"/login.html", "/index.html", "/"})
     public String login(){
@@ -99,8 +98,15 @@ public class LoginController {
    }
 
     @PostMapping("/login")
-    public String login(UserLoginVo userLoginVo){
+    public String login(UserLoginVo userLoginVo, RedirectAttributes redirectAttributes){
         // 调用远程服务进行登录
-        return "redirect:http://gulimall.com";
+        R login = memberRegisterService.login(userLoginVo);
+        if (login.getCode() == 0){
+            return "redirect:http://gulimall.com";
+        }else{
+            redirectAttributes.addFlashAttribute("errorMsg", login.get("msg"));
+            return "redirect:http://auth.gulimall.com/login.html";
+            //return "login";
+        }
     }
 }

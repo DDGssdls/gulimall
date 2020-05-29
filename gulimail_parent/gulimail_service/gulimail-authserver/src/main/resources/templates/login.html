@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <link rel="stylesheet" type="text/css" href="/static/login/JD_sass/JD1.css"/>
@@ -57,8 +57,9 @@
                 <div></div>
                 请输入账户名和密码
             </div>
-            <form action="/login" method="post">
+            <form action="http://auth.gulimall.com/login" method="post">
                 <ul>
+                    <div class="error" style="color: red" th:text="${errorMsg!=null?errorMsg: ''}"></div>
                     <li class="top_1">
                         <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
                         <input type="text" name="loginAccount" placeholder=" 邮箱/用户名/已验证手机" class="user"/>
@@ -162,7 +163,7 @@
             err_img1.src = 'JD_img/img11.png';
             err_img2.src = 'JD_img/img22.png';
         } else {
-            var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";
+         /*   var a = document.getElementsByClassName("a")[0].href = "http://www.baidu.com";*/
         }
         user.onfocus = function () {
             err_img1.src = 'JD_img/grow1.png';

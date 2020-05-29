@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.edu.common.exception.GulimallSysException;
 import com.edu.gulimail.member.feign.CouponFeignService;
+import com.edu.gulimail.member.vo.UserLoginVo;
 import com.edu.gulimail.member.vo.UserRegisterVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -107,5 +108,11 @@ public class MemberController {
             R.error(e.getMessage());
         }
         return R.ok();
+    }
+
+    @PostMapping("/login")
+    public R login(@RequestBody UserLoginVo vo){
+        MemberEntity memberEntity =  memberService.login(vo);
+        return memberEntity != null? R.ok() : R.error("账号或者是密码错误");
     }
 }

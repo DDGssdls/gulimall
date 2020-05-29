@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.edu.common.exception.GulimallSysException;
 import com.edu.common.utils.PageUtils;
 import com.edu.gulimail.member.entity.MemberEntity;
+import com.edu.gulimail.member.vo.UserLoginVo;
 import com.edu.gulimail.member.vo.UserRegisterVo;
 
 import java.util.Map;
@@ -23,5 +24,7 @@ public interface MemberService extends IService<MemberEntity> {
 
     boolean checkUserNameUnique(String userName) throws GulimallSysException;
     boolean checkPhoneNumUnique(String phoneNum) throws GulimallSysException;
+
+    MemberEntity login(UserLoginVo vo);
 }
 

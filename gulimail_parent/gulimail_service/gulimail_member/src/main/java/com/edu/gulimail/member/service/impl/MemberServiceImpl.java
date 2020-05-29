@@ -3,6 +3,7 @@ package com.edu.gulimail.member.service.impl;
 import com.edu.common.exception.GulimallSysException;
 import com.edu.gulimail.member.dao.MemberLevelDao;
 import com.edu.gulimail.member.entity.MemberLevelEntity;
+import com.edu.gulimail.member.vo.UserLoginVo;
 import com.edu.gulimail.member.vo.UserRegisterVo;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -78,6 +79,31 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         }else {
             throw  new GulimallSysException("用户手机不能注册多个");
         }
+    }
+
+    @Override
+    public MemberEntity login(UserLoginVo vo) {
+        String password = vo.getPassword();
+        String account = vo.getLoginAccount();
+        // 需要注意的就是 使用的是 BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        // 进行加密不能将密码再次的进行加密 而是使用 match方法 进行匹配：
+        // 进行密码的查询：
+        MemberEntity memberEntity =  baseMapper.selectOne(new QueryWrapper<MemberEntity>()
+                .eq("username", account)
+                .or()
+                .eq("mobile", account));
+        if (memberEntity != null){
+            // 表示的是数据库中没有此用户 就不进行密码的判断直接返回null
+            // 获取数据库中的password
+            String dataBasePassword = memberEntity.getPassword();
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            boolean matches = bCryptPasswordEncoder.matches(password, dataBasePassword);
+            if (matches){
+                return memberEntity;
+            }
+        }
+        return null;
+
     }
 
 }
