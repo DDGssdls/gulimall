@@ -20,7 +20,7 @@
         <module>gulimail_oss</module>
         <module>gulimail-search</module>
         <module>gulimail-authserver</module>
-
+        <module>gulimail-cart</module>
 
 
     </modules>
@@ -154,8 +154,11 @@
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
         </dependency>
-
-
+        <!--进行spring session的整合 就是将分布式session放到 redis中进行存储-->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+        </dependency>
 
     </dependencies>
 

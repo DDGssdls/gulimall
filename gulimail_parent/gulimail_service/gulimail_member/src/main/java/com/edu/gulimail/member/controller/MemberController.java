@@ -3,7 +3,6 @@ package com.edu.gulimail.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
-
 import com.edu.common.exception.GulimallSysException;
 import com.edu.gulimail.member.feign.CouponFeignService;
 import com.edu.gulimail.member.vo.UserLoginVo;
@@ -113,6 +112,6 @@ public class MemberController {
     @PostMapping("/login")
     public R login(@RequestBody UserLoginVo vo){
         MemberEntity memberEntity =  memberService.login(vo);
-        return memberEntity != null? R.ok() : R.error("账号或者是密码错误");
+        return memberEntity != null? R.ok().put("login",  memberEntity) : R.error("账号或者是密码错误");
     }
 }

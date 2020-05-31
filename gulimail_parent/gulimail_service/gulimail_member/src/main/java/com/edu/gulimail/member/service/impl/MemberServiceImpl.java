@@ -56,6 +56,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         memberEntity.setMobile(userRegisterVo.getPhoneNum());
         MemberLevelEntity levelEntity =  memberLevelDao.getDefaultLevel();
         memberEntity.setLevelId(levelEntity.getId());
+        memberEntity.setNickname(userName);
         baseMapper.insert(memberEntity);
 
     }

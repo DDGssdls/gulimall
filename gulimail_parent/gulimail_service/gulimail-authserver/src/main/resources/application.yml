@@ -11,8 +11,16 @@ spring:
   redis:
     host: 172.20.10.3
     port: 6379
+  session:
+    store-type: redis
+  # spring session 框架的整合 就是配置 session存储的类型 redis 设置redis 的连接信息
+  # spring session的实现原理 就是使用filter 将session的信息 替换成spring session自己的实现
 
 # 使用nacos注册中心需要注意的就是 1 配置 nacos 2 就是配置nacos连接的地址 3 就是给服务起名称 要不就是注册不上
 server:
   port: 20000
+  servlet:
+    session:
+      timeout: 30m
+
 

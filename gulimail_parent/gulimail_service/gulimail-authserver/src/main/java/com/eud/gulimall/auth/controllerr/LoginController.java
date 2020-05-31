@@ -1,21 +1,25 @@
 package com.eud.gulimall.auth.controllerr;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.edu.common.constant.LoginUser;
 import com.edu.common.utils.R;
 import com.eud.gulimall.auth.fegin.MemberRegisterService;
 import com.eud.gulimall.auth.fegin.OssFeignService;
+import com.eud.gulimall.auth.vo.MemberVo;
 import com.eud.gulimall.auth.vo.UserInfoVo;
 import com.eud.gulimall.auth.vo.UserLoginVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +42,10 @@ public class LoginController {
 
 
     @GetMapping(value = {"/login.html", "/index.html", "/"})
-    public String login(){
-        return "login";
+    public String login(HttpSession session){
+        Object attribute = session.getAttribute(LoginUser.LOGIN_USER);
+        return attribute == null? "login": "redirect:http://gulimall.com";
+
     }
     @GetMapping(value = {"/registor.html"})
     public String registor(){
@@ -98,10 +104,16 @@ public class LoginController {
    }
 
     @PostMapping("/login")
-    public String login(UserLoginVo userLoginVo, RedirectAttributes redirectAttributes){
+    public String login(UserLoginVo userLoginVo, RedirectAttributes redirectAttributes, HttpSession session){
         // 调用远程服务进行登录
         R login = memberRegisterService.login(userLoginVo);
         if (login.getCode() == 0){
+            Object login1 =  login.get("login");
+            // 进行逆转
+            String s = JSON.toJSONString(login1);
+            MemberVo memberVo = JSON.parseObject(s, new TypeReference<MemberVo>() {
+            });
+            session.setAttribute(LoginUser.LOGIN_USER, memberVo);
             return "redirect:http://gulimall.com";
         }else{
             redirectAttributes.addFlashAttribute("errorMsg", login.get("msg"));
