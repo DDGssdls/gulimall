@@ -24,4 +24,9 @@ public class CartController {
         System.out.println(userInfoTo);
         return "index";
     }
+
+    @GetMapping("/addcart")
+    public String addCart(){
+        return "success";
+    }
 }
